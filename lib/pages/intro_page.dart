@@ -24,8 +24,15 @@ class IntroPage extends StatelessWidget {
             Center(child: Image.asset('lib/images/sushi.png', width: 200, height: 200)),
           
             // title
+            SizedBox(height: 50),
+            Text('The taste of Japanese Food', style: GoogleFonts.dmSerifDisplay(
+              fontSize: 28,
+              color: Colors.white
+            )),
           
             // subtitle
+            SizedBox(height: 20),
+            Text('Experience the authentic flavors of Japan with our delicious sushi dishes.', style: TextStyle(color: Colors.grey, fontSize: 16)),
           
             // get started button
           ],),
