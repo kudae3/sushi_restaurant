@@ -62,6 +62,16 @@ class _MenuPageState extends State<MenuPage> {
       
       
           // menu list
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('Menu List', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay')),
+              ],
+            ),
+          ),
       
           // popular items
         ],)
