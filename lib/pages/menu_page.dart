@@ -12,6 +12,10 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+
+  void onDetailClicked(Food food){
+    Navigator.pushNamed(context, '/detail', arguments: food);
+  }
   
   
   List menuList = [
@@ -87,7 +91,7 @@ class _MenuPageState extends State<MenuPage> {
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => FoodCard(food: menuList[index], onTap: () => print('Detail clicked for ${menuList[index].name}')), 
+              itemBuilder: (context, index) => FoodCard(food: menuList[index], onTap: () => onDetailClicked(menuList[index])), 
               itemCount: menuList.length, 
               shrinkWrap: true),
           )),
