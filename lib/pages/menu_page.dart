@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_restaurant/components/button.dart';
+import 'package:sushi_restaurant/components/food_card.dart';
+import 'package:sushi_restaurant/models/food.dart';
 import 'package:sushi_restaurant/theme/colors.dart';
 
 class MenuPage extends StatefulWidget {
@@ -10,6 +12,16 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  
+  
+  List menuList = [
+    Food(name: 'California Roll', price: '\$12.99', imagePath: 'lib/images/sushi_1.png', rating: '4.5'),
+    Food(name: 'Spicy Tuna Roll', price: '\$14.99', imagePath: 'lib/images/sushi_2.png', rating: '4.7'),
+    Food(name: 'Salmon Roll', price: '\$13.99', imagePath: 'lib/images/sushi_3.png', rating: '4.6'),
+    Food(name: 'Dragon Roll', price: '\$16.99', imagePath: 'lib/images/sushi_4.png', rating: '4.8'),
+    Food(name: 'Maki', price: '\$12.99', imagePath: 'lib/images/maki.png', rating: '4.3'),
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,29 +29,29 @@ class _MenuPageState extends State<MenuPage> {
         appBar: AppBar(leading: Icon(Icons.menu), backgroundColor: Colors.transparent, elevation: 0, title: Text('Menu'), centerTitle: true,),
         body: Column(children: [
           // promo banner
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0),
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(25),
-              ), 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Get 20% Off Promotion!', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay')),
-                      SizedBox(height: 20),
-                      MyButton(text: 'Redeem', onTap: () => Navigator.pushNamed(context, '/intro')),
-                    ],
-                  ),
-                  SizedBox(width: 20),
-                  Image.asset('lib/images/sushi_2.png', width: 100, height: 100),
-                ],
-              )
-            ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(25),
+            ), 
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Get 20% Off Promotion!', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay')),
+                    SizedBox(height: 20),
+                    MyButton(text: 'Redeem', onTap: () => Navigator.pushNamed(context, '/intro')),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Image.asset('lib/images/sushi_2.png', width: 100, height: 100),
+              ],
+            )
+          ),
           
           // search bar
           Padding(
@@ -60,7 +72,6 @@ class _MenuPageState extends State<MenuPage> {
             ),
           ),
       
-      
           // menu list
           SizedBox(height: 20),
           Padding(
@@ -72,6 +83,10 @@ class _MenuPageState extends State<MenuPage> {
               ],
             ),
           ),
+          Expanded(child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView.builder(itemBuilder: (context, index) => FoodCard(food: menuList[index]), itemCount: menuList.length, shrinkWrap: true),
+          )),
       
           // popular items
         ],)
