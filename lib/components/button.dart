@@ -10,11 +10,18 @@ class MyButton extends StatelessWidget {
       width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 184, 83, 83),
-        borderRadius: BorderRadius.circular(10),
+        color: Color.fromARGB(255, 151, 50, 50),
+        borderRadius: BorderRadius.circular(25),
       ),
       child: Center(
-        child: Text(text, style: TextStyle(color: Colors.white, fontSize: 16)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(text, style: TextStyle(color: Colors.white, fontSize: 16)),
+            SizedBox(width: 10),
+            Icon(Icons.arrow_forward, color: Colors.white),
+          ],
+        ),
       ),
     );
   }

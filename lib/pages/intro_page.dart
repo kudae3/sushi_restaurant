@@ -13,8 +13,9 @@ class IntroPage extends StatelessWidget {
         padding: const EdgeInsets.all(25.0),
         child: Column( 
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             Text('SUSHI MAN', style: GoogleFonts.dmSerifDisplay(
               fontSize: 28,
               color: Colors.white
@@ -32,7 +33,7 @@ class IntroPage extends StatelessWidget {
             )),
           
             // subtitle
-            SizedBox(height: 20),
+            // SizedBox(height: 20),
             Text('Experience the authentic flavors of Japan with our delicious sushi dishes.', style: TextStyle(color: Colors.grey, fontSize: 16)),
           
             // get started button
