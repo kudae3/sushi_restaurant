@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_restaurant/components/button.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -21,7 +22,7 @@ class IntroPage extends StatelessWidget {
             
             // icon
             SizedBox(height: 50),
-            Center(child: Image.asset('lib/images/sushi.png', width: 200, height: 200)),
+            Center(child: Image.asset('lib/images/sushi.png', width: 300, height:300)),
           
             // title
             SizedBox(height: 50),
@@ -35,6 +36,8 @@ class IntroPage extends StatelessWidget {
             Text('Experience the authentic flavors of Japan with our delicious sushi dishes.', style: TextStyle(color: Colors.grey, fontSize: 16)),
           
             // get started button
+            SizedBox(height: 50),
+            MyButton(text: 'Get Started'),
           ],),
       )
     );
