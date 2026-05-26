@@ -85,10 +85,39 @@ class _MenuPageState extends State<MenuPage> {
           ),
           Expanded(child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: ListView.builder(itemBuilder: (context, index) => FoodCard(food: menuList[index]), itemCount: menuList.length, shrinkWrap: true),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => FoodCard(food: menuList[index]), 
+              itemCount: menuList.length, 
+              shrinkWrap: true),
           )),
       
           // popular items
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(25),
+            ), 
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Try Our Popular Items!', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay')),
+                    SizedBox(height: 20),
+                    MyButton(text: 'Order Now', onTap: () => Navigator.pushNamed(context, '/intro')),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Image.asset('lib/images/sushi_4.png', width: 100, height: 100),
+              ],
+            )
+          ),
+
         ],)
       );
   }
