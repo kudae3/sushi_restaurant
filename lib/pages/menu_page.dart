@@ -87,7 +87,7 @@ class _MenuPageState extends State<MenuPage> {
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => FoodCard(food: menuList[index]), 
+              itemBuilder: (context, index) => FoodCard(food: menuList[index], onTap: () => print('Detail clicked for ${menuList[index].name}')), 
               itemCount: menuList.length, 
               shrinkWrap: true),
           )),
