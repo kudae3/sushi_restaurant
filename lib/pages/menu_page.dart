@@ -29,7 +29,7 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 212, 202, 202),
+        backgroundColor: backgroundColor,
         appBar: AppBar(leading: Icon(Icons.menu), backgroundColor: Colors.transparent, elevation: 0, title: Text('Menu'), centerTitle: true,),
         body: Column(children: [
           // promo banner
