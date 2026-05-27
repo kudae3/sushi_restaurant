@@ -102,7 +102,6 @@ class _MenuPageState extends State<MenuPage> {
             SizedBox(height: 20),
             Container(
               padding: EdgeInsets.symmetric(vertical: 30.0),
-              margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(25),
