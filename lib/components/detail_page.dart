@@ -89,15 +89,30 @@ class _DetailPageState extends State<DetailPage> {
                 Row(
                   children: [
                     // Derease Button
-                    IconButton(icon: Icon(Icons.remove), color: Colors.white, onPressed: decreaseQuantity),
-                    SizedBox(width: 20),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 154, 125, 125),
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                      ),
+                      child: IconButton(icon: Icon(Icons.remove, fontWeight: FontWeight.bold), color: Colors.white, onPressed: decreaseQuantity),
+                    ),
+                    SizedBox(width: 30),
             
                     // Number
-                    Text(quantity.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay', color: Colors.white)),
-                    SizedBox(width: 20),
+                    SizedBox(width: 40, child: Text(quantity.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay', color: Colors.white))),
             
                     // Increase Button
-                    IconButton(icon: Icon(Icons.add), color: Colors.white, onPressed: increaseQuantity),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 154, 125, 125),
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                      ),
+                      child: IconButton(icon: Icon(Icons.add, fontWeight: FontWeight.bold), color: Colors.white, onPressed: increaseQuantity),
+                    ),
                   ]
                 )
               ],
