@@ -93,7 +93,7 @@ class _DetailPageState extends State<DetailPage> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 154, 125, 125),
+                        color: secondaryColor,
                         borderRadius: BorderRadius.all(Radius.circular(100)),
                       ),
                       child: IconButton(icon: Icon(Icons.remove, fontWeight: FontWeight.bold), color: Colors.white, onPressed: decreaseQuantity),
@@ -108,7 +108,7 @@ class _DetailPageState extends State<DetailPage> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 154, 125, 125),
+                        color: secondaryColor,
                         borderRadius: BorderRadius.all(Radius.circular(100)),
                       ),
                       child: IconButton(icon: Icon(Icons.add, fontWeight: FontWeight.bold), color: Colors.white, onPressed: increaseQuantity),
