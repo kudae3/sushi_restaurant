@@ -12,6 +12,21 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  
+  int quantity = 1;
+  
+  void decreaseQuantity(){
+    setState(() {
+      quantity = quantity > 1 ? quantity - 1 : 1;
+    });
+  }
+
+  void increaseQuantity(){
+    setState(() {
+      quantity++;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,15 +89,15 @@ class _DetailPageState extends State<DetailPage> {
                 Row(
                   children: [
                     // Derease Button
-                    Icon(Icons.remove, color: Colors.white, fontWeight: FontWeight.bold),
+                    IconButton(icon: Icon(Icons.remove), color: Colors.white, onPressed: decreaseQuantity),
                     SizedBox(width: 20),
             
                     // Number
-                    Text('1', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay', color: Colors.white)),
+                    Text(quantity.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay', color: Colors.white)),
                     SizedBox(width: 20),
             
                     // Increase Button
-                    Icon(Icons.add, color: Colors.white, fontWeight: FontWeight.bold),
+                    IconButton(icon: Icon(Icons.add), color: Colors.white, onPressed: increaseQuantity),
                   ]
                 )
               ],
