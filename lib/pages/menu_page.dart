@@ -31,7 +31,20 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: backgroundColor,
-        appBar: AppBar(leading: Icon(Icons.menu), backgroundColor: Colors.transparent, elevation: 0, title: Text('Menu'), centerTitle: true,),
+        appBar: AppBar(
+          leading: const Icon(Icons.menu),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text('Menu'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              tooltip: 'Cart',
+              icon: const Icon(Icons.shopping_cart_outlined),
+              onPressed: () => Navigator.pushNamed(context, '/cart'),
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(children: [
