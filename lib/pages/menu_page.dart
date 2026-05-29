@@ -13,19 +13,31 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  String searchQuery = '';
 
   void onDetailClicked(Food food){
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(food: food)));
   }
   
   
-  List menuList = [
+  final List<Food> menuList = [
     Food(name: 'California Roll', price: '\$12.99', imagePath: 'lib/images/sushi_1.png', rating: '4.5'),
     Food(name: 'Spicy Tuna Roll', price: '\$14.99', imagePath: 'lib/images/sushi_2.png', rating: '4.7'),
     Food(name: 'Salmon Roll', price: '\$13.99', imagePath: 'lib/images/sushi_3.png', rating: '4.6'),
     Food(name: 'Dragon Roll', price: '\$16.99', imagePath: 'lib/images/sushi_4.png', rating: '4.8'),
     Food(name: 'Maki', price: '\$12.99', imagePath: 'lib/images/maki.png', rating: '4.3'),
   ];
+
+  List<Food> get filteredMenuList {
+    if (searchQuery.isEmpty) {
+      return menuList;
+    }
+
+    final query = searchQuery.toLowerCase();
+    return menuList
+        .where((food) => food.name.toLowerCase().contains(query))
+        .toList();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -76,9 +88,14 @@ class _MenuPageState extends State<MenuPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: 'Search for sushi...',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide: BorderSide(color: primaryColor, width: 2),
@@ -98,17 +115,39 @@ class _MenuPageState extends State<MenuPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('Menu List', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DMSerifDisplay')),
+                  Text(
+                    searchQuery.isEmpty ? 'Menu List' : 'Search Results',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'DMSerifDisplay',
+                    ),
+                  ),
                 ],
               ),
             ),
             Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => FoodCard(food: menuList[index], onTap: () => onDetailClicked(menuList[index])), 
-                itemCount: menuList.length, 
-                shrinkWrap: true),
+              child: filteredMenuList.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No matching items found',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                          fontFamily: 'DMSerifDisplay',
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => FoodCard(
+                        food: filteredMenuList[index],
+                        onTap: () => onDetailClicked(filteredMenuList[index]),
+                      ),
+                      itemCount: filteredMenuList.length,
+                      shrinkWrap: true,
+                    ),
             )),
                 
             // popular items
