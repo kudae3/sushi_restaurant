@@ -10,22 +10,6 @@ class Shop {
       Food(name: 'Maki', price: '\$12.99', imagePath: 'lib/images/maki.png', rating: '4.3'),
     ];
 
-    // Customer Cart
-    final List<Food> _cart = [];
-
-    // getter mehtods
     List<Food> get menu => _menuList;
-    List<Food> get cart => _cart;
-
-    // add to cart method
-    void addToCart(Food food){
-      _cart.add(food);
-    }
-
-    // remove from cart method
-    void removeFromCart(Food food){
-      _cart.remove(food);
-    }
-
 
 }
