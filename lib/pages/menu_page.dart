@@ -146,7 +146,7 @@ class _MenuPageState extends State<MenuPage> {
                         onTap: () => onDetailClicked(filteredMenuList[index]),
                       ),
                       itemCount: filteredMenuList.length,
-                      shrinkWrap: true,
+                      // shrinkWrap: true,
                     ),
             )),
                 
