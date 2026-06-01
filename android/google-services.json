@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "342102069999",
+    "project_id": "sushi-restaurant-app-ae7e7",
+    "storage_bucket": "sushi-restaurant-app-ae7e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342102069999:android:22d8d1b1b3722c16af011a",
+        "android_client_info": {
+          "package_name": "com.example.sushi_restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342102069999-knermkkvr0he36seqm4m06ck7kpec5i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sushi_restaurant",
+            "certificate_hash": "8c0d34ae271338d8d1ba25fc9639cd7f63862764"
+          }
+        },
+        {
+          "client_id": "342102069999-3bgjnskup05qasc4liemq1eknh4o6bc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtkiwBmcVoycqwCyZ7oh6CVYpVnZlTBuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342102069999-3bgjnskup05qasc4liemq1eknh4o6bc7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342102069999-q1ogrosmun9n6s9ra1ujk2k7tqfl8q7b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sushiRestaurant"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
