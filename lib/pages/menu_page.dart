@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sushi_restaurant/components/button.dart';
 import 'package:sushi_restaurant/components/detail_page.dart';
 import 'package:sushi_restaurant/components/food_card.dart';
 import 'package:sushi_restaurant/models/food.dart';
+import 'package:sushi_restaurant/services/auth_service.dart';
 import 'package:sushi_restaurant/theme/colors.dart';
 
 class MenuPage extends StatefulWidget {
@@ -18,7 +20,8 @@ class _MenuPageState extends State<MenuPage> {
   void onDetailClicked(Food food){
     Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(food: food)));
   }
-  
+
+  final authService = AuthService();
   
   final List<Food> menuList = [
     Food(name: 'California Roll', price: '\$12.99', imagePath: 'lib/images/sushi_1.png', rating: '4.5'),
@@ -44,7 +47,15 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-          leading: const Icon(Icons.logout_outlined),
+          leading: IconButton(
+            onPressed: () async {
+              await authService.signOut();
+              if (!context.mounted) return;
+              // redirect to intro page
+              Navigator.pushReplacementNamed(context, '/intro');
+            }, 
+            icon: Icon(Icons.logout_outlined)
+          ),
           backgroundColor: Colors.transparent,
           elevation: 0,
           // title: const Text('Menu'),
@@ -121,7 +132,7 @@ class _MenuPageState extends State<MenuPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    searchQuery.isEmpty ? 'Menu List' : 'Search Results',
+                    searchQuery.isEmpty ? 'Today Popular Items' : 'Search Results',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
