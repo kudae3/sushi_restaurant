@@ -5,6 +5,7 @@ import 'package:sushi_restaurant/pages/intro_page.dart';
 import 'package:sushi_restaurant/pages/login_page.dart';
 import 'package:sushi_restaurant/pages/menu_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sushi_restaurant/pages/profile_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,6 +30,7 @@ class MainApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/menu' : (context) => const MenuPage(),
         '/cart' : (context) => const CartPage(),
+        '/profile' : (context) => const ProfilePage(),
       },
     );
   }

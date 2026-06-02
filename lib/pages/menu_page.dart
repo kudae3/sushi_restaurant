@@ -44,16 +44,21 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-          leading: const Icon(Icons.menu),
+          leading: const Icon(Icons.logout_outlined),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Menu'),
+          // title: const Text('Menu'),
           centerTitle: true,
           actions: [
             IconButton(
               tooltip: 'Cart',
               icon: const Icon(Icons.shopping_cart_outlined),
               onPressed: () => Navigator.pushNamed(context, '/cart'),
+            ),
+            IconButton(
+              tooltip: 'Profile',
+              icon: const Icon(Icons.account_circle_outlined),
+              onPressed: () => Navigator.pushNamed(context, '/profile'),
             ),
           ],
         ),
