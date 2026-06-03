@@ -122,10 +122,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
               text: 'Add to Cart',
               onTap: () {
                 final cartNotifier = ref.read(cartProvider.notifier);
-
-                for (var i = 0; i < quantity; i++) {
-                  cartNotifier.addItem(widget.food);
-                }
+                cartNotifier.addItem(widget.food, quantity);
 
                 Navigator.pushNamed(context, '/cart');
               },
