@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sushi_restaurant/components/button.dart';
 import 'package:sushi_restaurant/components/detail_page.dart';

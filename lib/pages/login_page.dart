@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final AuthService _auth = AuthService();
 
   AuthMode _mode = AuthMode.login;
@@ -28,7 +31,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -53,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
         await _auth.signUp(
           _emailController.text.trim(),
           _passwordController.text.trim(),
+          _usernameController.text.trim(),
         );
       }
 
@@ -62,6 +68,11 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
       setState(() {
         _errorMessage = _friendlyAuthMessage(error);
+      });
+    } on FirebaseException catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = _friendlyFirestoreMessage(error);
       });
     } catch (_) {
       if (!mounted) return;
@@ -93,6 +104,21 @@ class _LoginPageState extends State<LoginPage> {
         return 'Network error. Please check your connection.';
       default:
         return error.message ?? 'Authentication failed. Please try again.';
+    }
+  }
+
+  String _friendlyFirestoreMessage(FirebaseException error) {
+    switch (error.code) {
+      case 'permission-denied':
+        return 'We could not save your profile. Please try again.';
+      case 'unavailable':
+        return 'Profile storage is temporarily unavailable. Please try again.';
+      case 'deadline-exceeded':
+        return 'The request timed out. Please try again.';
+      case 'cancelled':
+        return 'Signup was cancelled. Please try again.';
+      default:
+        return error.message ?? 'Could not save your profile. Please try again.';
     }
   }
 
@@ -318,12 +344,45 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             },
                           ),
+                          if (_mode == AuthMode.register) ...[
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _usernameController,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                            decoration: _fieldDecoration(
+                              hintText: 'Username',
+                              icon: Icons.person_outline,
+                            ),
+                              validator: (value) {
+                                final text = value?.trim() ?? '';
+                                if (_mode != AuthMode.register) {
+                                  return null;
+                                }
+                                if (text.isEmpty) {
+                                  return 'Please choose a username.';
+                                }
+                                if (text.length < 3) {
+                                  return 'Username must be at least 3 characters.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
                           const SizedBox(height: 16),
                           TextFormField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
-                            textInputAction: TextInputAction.done,
-                            onFieldSubmitted: (_) => _submit(),
+                            textInputAction: _mode == AuthMode.register
+                                ? TextInputAction.next
+                                : TextInputAction.done,
+                            onFieldSubmitted: (_) {
+                              if (_mode == AuthMode.login) {
+                                _submit();
+                              } else {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
                             decoration: _fieldDecoration(
                               hintText: 'Password',
                               icon: Icons.lock_outline,
@@ -355,6 +414,32 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             },
                           ),
+                          if (_mode == AuthMode.register) ...[
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _confirmPasswordController,
+                              obscureText: _obscurePassword,
+                              textInputAction: TextInputAction.done,
+                              onFieldSubmitted: (_) => _submit(),
+                              decoration: _fieldDecoration(
+                                hintText: 'Confirm password',
+                                icon: Icons.lock_reset_outlined,
+                              ),
+                              validator: (value) {
+                                final text = value ?? '';
+                                if (_mode != AuthMode.register) {
+                                  return null;
+                                }
+                                if (text.isEmpty) {
+                                  return 'Please confirm your password.';
+                                }
+                                if (text != _passwordController.text) {
+                                  return 'Passwords do not match.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
                           const SizedBox(height: 12),
                           if (_errorMessage != null) ...[
                             Container(
