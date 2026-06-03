@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sushi_restaurant/pages/login_page.dart';
+import 'package:sushi_restaurant/pages/auth_page.dart';
 import 'package:sushi_restaurant/pages/menu_page.dart';
 
 class AuthGate extends StatelessWidget {
@@ -14,7 +14,7 @@ class AuthGate extends StatelessWidget {
         if (snapshot.hasData) {
           return const MenuPage();
         } else {
-          return const LoginPage();
+          return const AuthPage();
         }
       },
     );

@@ -38,7 +38,7 @@ class IntroPage extends StatelessWidget {
           
             // get started button
             SizedBox(height: 50),
-            MyButton(text: 'Get Started', onTap:() => Navigator.pushNamed(context, '/login')),
+            MyButton(text: 'Get Started', onTap:() => Navigator.pushNamed(context, '/auth')),
           ],),
       )
     );

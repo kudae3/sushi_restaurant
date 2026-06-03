@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sushi_restaurant/pages/cart_page.dart';
 import 'package:sushi_restaurant/pages/intro_page.dart';
-import 'package:sushi_restaurant/pages/login_page.dart';
+import 'package:sushi_restaurant/pages/auth_page.dart';
 import 'package:sushi_restaurant/pages/menu_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sushi_restaurant/pages/profile_page.dart';
@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
       home:  const IntroPage(),
       routes: {
         '/intro': (context) => const IntroPage(),
-        '/login': (context) => const LoginPage(),
+        '/auth': (context) => const AuthPage(),
         '/menu' : (context) => const MenuPage(),
         '/cart' : (context) => const CartPage(),
         '/profile' : (context) => const ProfilePage(),
