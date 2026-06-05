@@ -29,9 +29,9 @@ class ProfilePage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.86),
+        color: Colors.white.withValues(alpha: 0.86),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: secondaryColor.withOpacity(0.10)),
+        border: Border.all(color: secondaryColor.withValues(alpha: 0.10)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class ProfilePage extends StatelessWidget {
             height: 42,
             width: 42,
             decoration: BoxDecoration(
-              color: secondaryColor.withOpacity(0.12),
+              color: secondaryColor.withValues(alpha: 0.12),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: primaryColor, size: 20),
@@ -129,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
+                              color: Colors.black.withValues(alpha: 0.08),
                               blurRadius: 24,
                               offset: const Offset(0, 14),
                             ),
@@ -142,7 +142,7 @@ class ProfilePage extends StatelessWidget {
                               height: 84,
                               width: 84,
                               decoration: BoxDecoration(
-                                color: secondaryColor.withOpacity(0.12),
+                                color: secondaryColor.withValues(alpha: 0.12),
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(

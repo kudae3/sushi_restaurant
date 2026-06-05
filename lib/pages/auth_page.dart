@@ -202,7 +202,7 @@ class _AuthPageState extends State<AuthPage> {
       contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: BorderSide(color: secondaryColor.withOpacity(0.18), width: 1.4),
+        borderSide: BorderSide(color: secondaryColor.withValues(alpha: 0.18), width: 1.4),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
@@ -258,7 +258,7 @@ class _AuthPageState extends State<AuthPage> {
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black87,
-          side: BorderSide(color: secondaryColor.withOpacity(0.16), width: 1.2),
+          side: BorderSide(color: secondaryColor.withValues(alpha: 0.16), width: 1.2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
@@ -330,12 +330,12 @@ class _AuthPageState extends State<AuthPage> {
           Positioned(
             top: -90,
             right: -60,
-            child: _backgroundBlob(170, secondaryColor.withOpacity(0.18)),
+            child: _backgroundBlob(170, secondaryColor.withValues(alpha: 0.18)),
           ),
           Positioned(
             bottom: -100,
             left: -70,
-            child: _backgroundBlob(220, primaryColor.withOpacity(0.12)),
+            child: _backgroundBlob(220, primaryColor.withValues(alpha: 0.12)),
           ),
           SafeArea(
             child: Center(
@@ -349,13 +349,13 @@ class _AuthPageState extends State<AuthPage> {
                       borderRadius: BorderRadius.circular(32),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.10),
+                          color: Colors.black.withValues(alpha: 0.10),
                           blurRadius: 30,
                           offset: const Offset(0, 18),
                         ),
                       ],
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.45),
+                        color: Colors.white.withValues(alpha: 0.45),
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
@@ -397,7 +397,7 @@ class _AuthPageState extends State<AuthPage> {
                                 height: 58,
                                 width: 58,
                                 decoration: BoxDecoration(
-                                  color: secondaryColor.withOpacity(0.12),
+                                  color: secondaryColor.withValues(alpha: 0.12),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
@@ -422,10 +422,10 @@ class _AuthPageState extends State<AuthPage> {
                           const SizedBox(height: 22),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                               borderRadius: BorderRadius.circular(18),
                               border: Border.all(
-                                color: secondaryColor.withOpacity(0.10),
+                                color: secondaryColor.withValues(alpha: 0.10),
                               ),
                             ),
                             padding: const EdgeInsets.all(5),
@@ -565,10 +565,10 @@ class _AuthPageState extends State<AuthPage> {
                               width: double.infinity,
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.08),
+                                color: Colors.red.withValues(alpha: 0.08),
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: Colors.red.withOpacity(0.18),
+                                  color: Colors.red.withValues(alpha: 0.18),
                                 ),
                               ),
                               child: Text(
@@ -601,7 +601,7 @@ class _AuthPageState extends State<AuthPage> {
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2.5,
                                         valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.white.withOpacity(0.95),
+                                          Colors.white.withValues(alpha: 0.95),
                                         ),
                                       ),
                                     )
@@ -619,7 +619,7 @@ class _AuthPageState extends State<AuthPage> {
                             children: [
                               Expanded(
                                 child: Divider(
-                                  color: secondaryColor.withOpacity(0.18),
+                                  color: secondaryColor.withValues(alpha: 0.18),
                                   thickness: 1,
                                 ),
                               ),
@@ -636,7 +636,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                               Expanded(
                                 child: Divider(
-                                  color: secondaryColor.withOpacity(0.18),
+                                  color: secondaryColor.withValues(alpha: 0.18),
                                   thickness: 1,
                                 ),
                               ),
