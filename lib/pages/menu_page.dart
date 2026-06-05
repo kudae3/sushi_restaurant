@@ -3,6 +3,7 @@ import 'package:sushi_restaurant/components/button.dart';
 import 'package:sushi_restaurant/components/confirmation_dialog.dart';
 import 'package:sushi_restaurant/components/detail_page.dart';
 import 'package:sushi_restaurant/components/food_card.dart';
+import 'package:sushi_restaurant/data/menu_catalog.dart';
 import 'package:sushi_restaurant/models/food.dart';
 import 'package:sushi_restaurant/services/auth_service.dart';
 import 'package:sushi_restaurant/theme/colors.dart';
@@ -22,14 +23,7 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   final authService = AuthService();
-  
-  final List<Food> menuList = [
-    Food(name: 'California Roll', price: '\$12.99', imagePath: 'lib/images/sushi_1.png', rating: '4.5'),
-    Food(name: 'Spicy Tuna Roll', price: '\$14.99', imagePath: 'lib/images/sushi_2.png', rating: '4.7'),
-    Food(name: 'Salmon Roll', price: '\$13.99', imagePath: 'lib/images/sushi_3.png', rating: '4.6'),
-    Food(name: 'Dragon Roll', price: '\$16.99', imagePath: 'lib/images/sushi_4.png', rating: '4.8'),
-    Food(name: 'Maki', price: '\$12.99', imagePath: 'lib/images/maki.png', rating: '4.3'),
-  ];
+  final List<Food> menuList = menuCatalog;
 
   List<Food> get filteredMenuList {
     if (searchQuery.isEmpty) {
@@ -73,6 +67,11 @@ class _MenuPageState extends State<MenuPage> {
               tooltip: 'Cart',
               icon: const Icon(Icons.shopping_cart_outlined),
               onPressed: () => Navigator.pushNamed(context, '/cart'),
+            ),
+            IconButton(
+              tooltip: 'Orders',
+              icon: const Icon(Icons.receipt_long_outlined),
+              onPressed: () => Navigator.pushNamed(context, '/orders'),
             ),
             IconButton(
               tooltip: 'Profile',

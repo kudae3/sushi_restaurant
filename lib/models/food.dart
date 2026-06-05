@@ -1,9 +1,16 @@
 class Food {
-  String name;
-  String price;
-  String imagePath;
-  String rating;
+  final String id;
+  final String name;
+  final String price;
+  final String imagePath;
+  final String rating;
 
-  Food({required this.name, required this.price, required this.imagePath, required this.rating});
+  const Food({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.imagePath,
+    required this.rating,
+  });
 
 }

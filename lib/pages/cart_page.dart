@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sushi_restaurant/components/button.dart';
+import 'package:sushi_restaurant/components/checkout_dialog.dart';
 import 'package:sushi_restaurant/components/confirmation_dialog.dart';
 import 'package:sushi_restaurant/providers/cart_provider.dart';
 import 'package:sushi_restaurant/theme/colors.dart';
@@ -172,7 +173,23 @@ class CartPage extends ConsumerWidget {
                     const SizedBox(height: 12),
                     MyButton(
                       text: 'Checkout',
-                      onTap: () {},
+                      onTap: () async {
+                        final createdOrder = await CheckoutDialog.show(
+                          context: context,
+                          cartItems: cartItems,
+                        );
+
+                        if (createdOrder == null || !context.mounted) {
+                          return;
+                        }
+
+                        ref.read(cartProvider.notifier).clearCart();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Order placed successfully.'),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

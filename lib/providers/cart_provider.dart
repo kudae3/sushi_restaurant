@@ -28,7 +28,7 @@ class CartNotifier extends Notifier<List<CartLine>> {
   List<CartLine> build() => [];
 
   String _foodKey(Food food) {
-    return '${food.name}|${food.price}|${food.imagePath}|${food.rating}';
+    return food.id;
   }
 
   int _lineIndex(Food food) {
