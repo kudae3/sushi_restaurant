@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../services/auth_service.dart';
@@ -24,6 +25,7 @@ class _AuthPageState extends State<AuthPage> {
 
   AuthMode _mode = AuthMode.login;
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   bool _obscurePassword = true;
   String? _errorMessage;
 
@@ -38,7 +40,7 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _submit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
-    if (!isValid || _isLoading) return;
+    if (!isValid || _isBusy) return;
 
     FocusScope.of(context).unfocus();
 
@@ -87,6 +89,46 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
+  Future<void> _submitWithGoogle() async {
+    if (_isBusy) return;
+
+    FocusScope.of(context).unfocus();
+
+    setState(() {
+      _isGoogleLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      await _auth.signInWithGoogle();
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/menu');
+    } on FirebaseAuthException catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = _friendlyAuthMessage(error);
+      });
+    } on FirebaseException catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = _friendlyFirestoreMessage(error);
+      });
+    } catch (error, stackTrace) {
+      if (!mounted) return;
+      debugPrint('Unexpected Google sign-in UI failure: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      setState(() {
+        _errorMessage = 'Google sign-in failed: $error';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isGoogleLoading = false;
+        });
+      }
+    }
+  }
+
   String _friendlyAuthMessage(FirebaseAuthException error) {
     switch (error.code) {
       case 'invalid-email':
@@ -101,6 +143,22 @@ class _AuthPageState extends State<AuthPage> {
         return 'Use a stronger password with at least 6 characters.';
       case 'network-request-failed':
         return 'Network error. Please check your connection.';
+      case 'sign_in_canceled':
+      case 'canceled':
+        return 'Google sign-in was cancelled.';
+      case 'sign_in_failed':
+        return error.message ?? 'Google sign-in failed. Please try again.';
+      case 'sign_in_config_error':
+        return error.message ??
+            'Google sign-in is not fully configured for this app.';
+      case 'account-exists-with-different-credential':
+        return 'An account already exists with a different sign-in method. Please log in using that method first.';
+      case 'credential-already-in-use':
+        return 'This Google account is already linked to another sign-in method.';
+      case 'provider-already-linked':
+        return 'This Google account is already linked to your profile.';
+      case 'invalid-credential':
+        return 'Google credentials are no longer valid. Please try again.';
       default:
         return error.message ?? 'Authentication failed. Please try again.';
     }
@@ -168,7 +226,7 @@ class _AuthPageState extends State<AuthPage> {
     final selected = _mode == mode;
     return Expanded(
       child: GestureDetector(
-        onTap: _isLoading ? null : () => _setMode(mode),
+        onTap: _isBusy ? null : () => _setMode(mode),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
@@ -191,6 +249,67 @@ class _AuthPageState extends State<AuthPage> {
       ),
     );
   }
+
+  Widget _googleButton() {
+    return SizedBox(
+      height: 56,
+      child: OutlinedButton(
+        onPressed: _isBusy ? null : _submitWithGoogle,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black87,
+          side: BorderSide(color: secondaryColor.withOpacity(0.16), width: 1.2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          elevation: 0,
+        ),
+        child: _isGoogleLoading
+            ? SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    primaryColor,
+                  ),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Continue with Google',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    height: 26,
+                    width: 26,
+                    decoration: BoxDecoration(
+                      color: secondaryColor.withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        'lib/images/google.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+
+  bool get _isBusy => _isLoading || _isGoogleLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -347,12 +466,13 @@ class _AuthPageState extends State<AuthPage> {
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _usernameController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                            decoration: _fieldDecoration(
-                              hintText: 'Username',
-                              icon: Icons.person_outline,
-                            ),
+                              textInputAction: TextInputAction.next,
+                              onFieldSubmitted: (_) =>
+                                  FocusScope.of(context).nextFocus(),
+                              decoration: _fieldDecoration(
+                                hintText: 'Username',
+                                icon: Icons.person_outline,
+                              ),
                               validator: (value) {
                                 final text = value?.trim() ?? '';
                                 if (_mode != AuthMode.register) {
@@ -387,7 +507,7 @@ class _AuthPageState extends State<AuthPage> {
                               icon: Icons.lock_outline,
                               suffixIcon: IconButton(
                                 tooltip: _obscurePassword ? 'Show password' : 'Hide password',
-                                onPressed: _isLoading
+                                onPressed: _isBusy
                                     ? null
                                     : () {
                                         setState(() {
@@ -465,7 +585,7 @@ class _AuthPageState extends State<AuthPage> {
                           SizedBox(
                             height: 56,
                             child: ElevatedButton(
-                              onPressed: _isLoading ? null : _submit,
+                              onPressed: _isBusy ? null : _submit,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                                 foregroundColor: Colors.white,
@@ -492,8 +612,38 @@ class _AuthPageState extends State<AuthPage> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                            ),
+                              ),
                           ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  color: secondaryColor.withOpacity(0.18),
+                                  thickness: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                child: Text(
+                                  'or',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  color: secondaryColor.withOpacity(0.18),
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          _googleButton(),
                           const SizedBox(height: 18),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -506,7 +656,7 @@ class _AuthPageState extends State<AuthPage> {
                                 ),
                               ),
                               TextButton(
-                                onPressed: _isLoading
+                                onPressed: _isBusy
                                     ? null
                                     : () => _setMode(
                                           _mode == AuthMode.login
