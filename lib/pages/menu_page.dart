@@ -53,7 +53,7 @@ class _MenuPageState extends State<MenuPage> {
               // redirect to intro page
               Navigator.pushReplacementNamed(context, '/intro');
             }, 
-            icon: Icon(Icons.logout_outlined)
+            icon: Icon(Icons.logout_outlined, color: Colors.red)
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
