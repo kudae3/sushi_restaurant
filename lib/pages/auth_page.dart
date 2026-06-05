@@ -68,7 +68,7 @@ class _AuthPageState extends State<AuthPage> {
     } on FirebaseAuthException catch (error) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = _friendlyAuthMessage(error);
+        _errorMessage = _friendlyEmailPasswordAuthMessage(error);
       });
     } on FirebaseException catch (error) {
       if (!mounted) return;
@@ -106,7 +106,7 @@ class _AuthPageState extends State<AuthPage> {
     } on FirebaseAuthException catch (error) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = _friendlyAuthMessage(error);
+        _errorMessage = _friendlyGoogleAuthMessage(error);
       });
     } on FirebaseException catch (error) {
       if (!mounted) return;
@@ -129,7 +129,7 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  String _friendlyAuthMessage(FirebaseAuthException error) {
+  String _friendlyEmailPasswordAuthMessage(FirebaseAuthException error) {
     switch (error.code) {
       case 'invalid-email':
         return 'Please enter a valid email address.';
@@ -143,6 +143,27 @@ class _AuthPageState extends State<AuthPage> {
         return 'Use a stronger password with at least 6 characters.';
       case 'network-request-failed':
         return 'Network error. Please check your connection.';
+      case 'invalid-credential':
+        return 'Invalid email or password. Please try again.';
+      case 'account-exists-with-different-credential':
+        return 'This email is linked to a different sign-in method. Please continue with that provider.';
+      case 'credential-already-in-use':
+        return 'This credential is already linked to another account.';
+      case 'provider-already-linked':
+        return 'This sign-in provider is already linked to your account.';
+      case 'operation-not-allowed':
+        return 'Email/password sign-in is not enabled for this account.';
+      case 'user-disabled':
+        return 'This account has been disabled.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      default:
+        return error.message ?? 'Authentication failed. Please try again.';
+    }
+  }
+
+  String _friendlyGoogleAuthMessage(FirebaseAuthException error) {
+    switch (error.code) {
       case 'sign_in_canceled':
       case 'canceled':
         return 'Google sign-in was cancelled.';
@@ -160,7 +181,7 @@ class _AuthPageState extends State<AuthPage> {
       case 'invalid-credential':
         return 'Google credentials are no longer valid. Please try again.';
       default:
-        return error.message ?? 'Authentication failed. Please try again.';
+        return error.message ?? 'Google sign-in failed. Please try again.';
     }
   }
 

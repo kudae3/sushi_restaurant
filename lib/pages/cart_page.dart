@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sushi_restaurant/components/button.dart';
+import 'package:sushi_restaurant/components/confirmation_dialog.dart';
 import 'package:sushi_restaurant/providers/cart_provider.dart';
 import 'package:sushi_restaurant/theme/colors.dart';
 
@@ -154,7 +155,16 @@ class CartPage extends ConsumerWidget {
                       height: 56,
                       child: ElevatedButton(
                         onPressed: () {
-                          ref.read(cartProvider.notifier).clearCart();
+                          ConfirmationDialog.show(
+                            context: context,
+                            title: 'Clear cart?',
+                            message: 'This will remove all items from your cart.',
+                            cancelLabel: 'Cancel',
+                            confirmLabel: 'Clear Cart',
+                            onConfirm: () {
+                              ref.read(cartProvider.notifier).clearCart();
+                            },
+                          );
                         },
                         child: const Text('Clear Cart'),
                       ),
