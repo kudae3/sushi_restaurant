@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_restaurant/components/button.dart';
+import 'package:sushi_restaurant/components/confirmation_dialog.dart';
 import 'package:sushi_restaurant/components/detail_page.dart';
 import 'package:sushi_restaurant/components/food_card.dart';
 import 'package:sushi_restaurant/models/food.dart';
@@ -47,13 +48,21 @@ class _MenuPageState extends State<MenuPage> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () async {
-              await authService.signOut();
-              if (!context.mounted) return;
-              // redirect to intro page
-              Navigator.pushReplacementNamed(context, '/intro');
-            }, 
-            icon: Icon(Icons.logout_outlined, color: Colors.red)
+            onPressed: () {
+              ConfirmationDialog.show(
+                context: context,
+                title: 'Log out?',
+                message: 'Are you sure you want to log out of your account?',
+                cancelLabel: 'Cancel',
+                confirmLabel: 'Logout',
+                onConfirm: () async {
+                  await authService.signOut();
+                  if (!context.mounted) return;
+                  Navigator.pushReplacementNamed(context, '/intro');
+                },
+              );
+            },
+            icon: const Icon(Icons.logout_outlined, color: Colors.red),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
