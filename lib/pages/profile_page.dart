@@ -115,7 +115,6 @@ class ProfilePage extends StatelessWidget {
                 final data = snapshot.data?.data();
                 final name = _displayName(data, user);
                 final email = (data?['email'] as String?) ?? user.email ?? 'No email found';
-                final uid = user.uid;
 
                 return Center(
                   child: SingleChildScrollView(
